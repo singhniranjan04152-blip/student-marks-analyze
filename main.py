@@ -1,17 +1,16 @@
 
-students = [
-    {"name": "Rahul", "marks": 85},
-    {"name": "Aman", "marks": 92},
-    {"name": "Priya", "marks": 78},
-    {"name": "Rohit", "marks": 95},
-    {"name": "Neha", "marks": 88}
-]
+import csv
 
-for student in students:
-    print("Name:", student["name"])
-    print("Marks:", student["marks"])
-    print("----------------")
+students = []
 
+with open("students.csv", "r") as file:
+    reader = csv.DictReader(file)
+
+    for row in reader:
+        students.append({
+            "name": row["name"],
+            "marks": int(row["marks"])
+        })
 
 total = 0
 topper = students[0]
@@ -24,8 +23,25 @@ for student in students:
 
 average = total / len(students)
 
-print("\n========== RESULT ==========")
-print("Total Marks:", total)
-print("Average Marks:", average)
+print("Total:", total)
+print("Average:", average)
 print("Topper:", topper["name"])
 print("Topper Marks:", topper["marks"])
+
+print("\nStudent Grades:\n")
+
+for student in students:
+    marks = student["marks"]
+
+    if marks >= 90:
+        grade = "A"
+    elif marks >= 80:
+        grade = "B"
+    elif marks >= 70:
+        grade = "C"
+    elif marks >= 60:
+        grade = "D"
+    else:
+        grade = "F"
+
+    print(student["name"], "-", marks, "- Grade", grade)
